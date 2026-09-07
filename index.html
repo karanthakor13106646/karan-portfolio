@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Karan Thakor | Frontend Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+            background: #050507;
+            color: white;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* =========================
+           CURSOR LIGHT
+        ========================== */
+
+        #cursorGlow {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 70, 180, .13),
+                    rgba(120, 70, 255, .06),
+                    transparent 70%
+                );
+
+            transform: translate(-50%, -50%);
+            z-index: 1;
+
+            transition:
+                left .08s linear,
+                top .08s linear;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================== */
+
+        .grid-bg {
+            background-image:
+
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 60px 60px;
+        }
+
+        /* =========================
+           TEXT GLOW
+        ========================== */
+
+        .neon-text {
+            text-shadow:
+                0 0 10px rgba(255, 100, 190, .25),
+                0 0 30px rgba(150, 70, 255, .15);
+        }
+
+        .bracket {
+            color: #ff5bbd;
+            transition: .25s;
+        }
+
+        .hover-bracket:hover .bracket {
+            animation:
+                blink .6s ease-in-out infinite;
+
+            text-shadow:
+                0 0 5px #ff4db8,
+                0 0 15px #ff4db8,
+                0 0 30px #8b5cf6;
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================== */
+
+        @keyframes blink {
+
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .25;
+            }
+
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+        }
+
+        @keyframes reveal {
+
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .animate-reveal {
+            animation: reveal 1s ease forwards;
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+
+            background: rgba(0,0,0,.5);
+            backdrop-filter: blur(20px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        nav {
+            max-width: 1152px;
+            margin: auto;
+            padding: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .logo:hover {
+            color: #f472b6;
+        }
+
+        .desktop-menu {
+            display: flex;
+            gap: 32px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .nav-item {
+            position: relative;
+            text-decoration: none;
+            color: #9ca3af;
+            transition: .3s;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .nav-item::after {
+            content: "";
+            position: absolute;
+
+            height: 2px;
+            width: 0;
+            left: 50%;
+            bottom: -7px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff4db8,
+                    #8b5cf6
+                );
+
+            transition: .3s;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .contact-nav {
+            padding: 9px 20px;
+            border-radius: 8px;
+
+            border: 1px solid rgba(236,72,153,.6);
+
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+
+            transition: .3s;
+        }
+
+        .contact-nav:hover {
+            background: rgba(236,72,153,.1);
+
+            box-shadow:
+                0 0 20px rgba(236,72,153,.2);
+        }
+
+        #menuButton {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #mobileMenu {
+            display: none;
+            padding: 0 24px 24px;
+            background: rgba(0,0,0,.9);
+        }
+
+        #mobileMenu a {
+            display: block;
+            color: #d1d5db;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        /* =========================
+           COMMON
+        ========================== */
+
+        section {
+            padding: 128px 20px;
+        }
+
+        .container {
+            max-width: 1152px;
+            margin: auto;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        #home {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+
+            padding-top: 128px;
+            padding-bottom: 80px;
+        }
+
+        .hero-glow {
+            position: absolute;
+
+            width: 384px;
+            height: 384px;
+
+            border-radius: 50%;
+
+            background: rgba(236,72,153,.1);
+
+            filter: blur(130px);
+
+            top: 160px;
+            left: 40px;
+
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-small {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+
+            font-size: 28px;
+
+            color: #d1d5db;
+
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            line-height: .98;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .hero-title span {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #f472b6;
+        }
+
+        .hero-description {
+            margin-top: 30px;
+            max-width: 650px;
+
+            color: #9ca3af;
+
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 36px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 28px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: .25s;
+        }
+
+        .primary-button {
+            color: white;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ec4899,
+                    #9333ea
+                );
+        }
+
+        .primary-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 0 25px rgba(255,70,180,.3);
+        }
+
+        .secondary-button {
+            color: white;
+
+            border:
+                1px solid rgba(236,72,153,.7);
+        }
+
+        .secondary-button:hover {
+            background: rgba(236,72,153,.1);
+        }
+
+        .scroll {
+            margin-top: 80px;
+
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .scroll-line {
+            width: 64px;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ec4899,
+                    #8b5cf6
+                );
+        }
+
+        .scroll-text {
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #4b5563;
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        .about-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 2fr;
+
+            gap: 48px;
+        }
+
+        .section-label {
+            color: #f472b6;
+
+            font-family: monospace;
+
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 60px;
+
+            margin: 12px 0 0;
+
+            line-height: 1;
+
+            font-weight: 700;
+        }
+
+        .section-title span {
+            font-family: 'Playfair Display', serif;
+
+            font-style: italic;
+
+            color: #6b7280;
+        }
+
+        .about-text {
+            color: #9ca3af;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin: 0 0 24px;
+        }
+
+        .language-title {
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            margin-top: 30px;
+        }
+
+        .languages {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 15px;
+        }
+
+        .language {
+            padding: 9px 16px;
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            border-radius: 8px;
+
+            color: #d1d5db;
+
+            font-size: 14px;
+
+            background: rgba(255,255,255,.02);
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 32px;
+
+            margin-top: 40px;
+        }
+
+        .stats h3 {
+            color: white;
+
+            font-size: 20px;
+
+            margin: 0 0 5px;
+        }
+
+        .stats p {
+            color: #4b5563;
+
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+        /* =========================
+           SKILLS
+        ========================== */
+
+        #skills,
+        #contact {
+            background: #08080d;
+        }
+
+        .skill-buttons {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 40px;
+
+            margin-bottom: 40px;
+        }
+
+        .skill-tab {
+            padding: 12px 24px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            background: transparent;
+
+            color: #9ca3af;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .skill-tab.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    #ec4899,
+                    #8b5cf6
+                );
+
+            color: white;
+
+            box-shadow:
+                0 0 25px rgba(236,72,153,.2);
+        }
+
+        .skills-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 24px;
+        }
+
+        .magic-card {
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .magic-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 200%;
+            height: 200%;
+
+            top: -50%;
+            left: -50%;
+
+            background:
+                conic-gradient(
+                    transparent,
+                    transparent,
+                    #ff4db8,
+                    #8b5cf6,
+                    transparent
+                );
+
+            opacity: 0;
+
+            animation:
+                cardSpin 4s linear infinite;
+
+            transition: opacity .3s;
+        }
+
+        .magic-card:hover::before {
+            opacity: 1;
+        }
+
+        .magic-card::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 1px;
+
+            background: #0b0b10;
+
+            border-radius: 15px;
+
+            z-index: 0;
+        }
+
+        @keyframes cardSpin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        .card-content {
+            position: relative;
+
+            z-index: 2;
+
+            background: #0b0b10;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            min-height: 190px;
+        }
+
+        .skill-icon {
+            font-size: 36px;
+            color: #ff5bbd;
+        }
+
+        .card-content h3 {
+            font-size: 20px;
+
+            margin: 28px 0 0;
+        }
+
+        .card-content p {
+            color: #6b7280;
+
+            margin-top: 12px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           EDUCATION
+        ========================== */
+
+        .education-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 24px;
+
+            margin-top: 50px;
+        }
+
+        .education-card {
+            background: #0b0b10;
+
+            padding: 32px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+            transition: .3s;
+        }
+
+        .education-card:hover {
+            border-color:
+                rgba(236,72,153,.4);
+
+            transform: translateY(-3px);
+        }
+
+        .current {
+            color: #f472b6;
+
+            font-size: 14px;
+        }
+
+        .education-card h3 {
+            font-size: 24px;
+
+            margin: 12px 0 0;
+        }
+
+        .education-card p {
+            color: #6b7280;
+
+            margin-top: 8px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CONTACT
+        ========================== */
+
+        .contact-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .contact-title {
+            font-size: 70px;
+
+            line-height: 1.1;
+
+            margin: 16px 0 0;
+        }
+
+        .contact-title span {
+            font-family: 'Playfair Display', serif;
+
+            font-style: italic;
+
+            color: #f472b6;
+        }
+
+        .contact-description {
+            color: #6b7280;
+
+            max-width: 500px;
+
+            line-height: 1.8;
+
+            margin-top: 28px;
+        }
+
+        .contact-info {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 24px;
+        }
+
+        .contact-item {
+            padding: 24px;
+
+            background: #0b0b10;
+
+            border-radius: 14px;
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+            transition: .3s;
+        }
+
+        .contact-item:hover {
+            border-color:
+                rgba(236,72,153,.4);
+
+            transform: translateY(-3px);
+        }
+
+        .contact-item span {
+            display: block;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        .contact-item a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            word-break: break-word;
+        }
+
+        .contact-item a:hover {
+            color: #f472b6;
+        }
+
+        /* =========================
+           CONTACT ME TEXT
+        ========================== */
+
+        .contact-me-title {
+            margin-top: 45px;
+
+            font-size: 34px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #f472b6,
+                    #a78bfa
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-me-text {
+            color: #9ca3af;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+
+            margin-top: 12px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            border-top:
+                1px solid rgba(255,255,255,.05);
+
+            padding:
+                96px 20px 40px;
+        }
+
+        .footer-arrow {
+            color: #f472b6;
+
+            font-size: 110px;
+        }
+
+        .footer-title {
+            font-size: 70px;
+
+            margin: 20px 0 0;
+        }
+
+        .footer-title span {
+            font-family: 'Playfair Display', serif;
+
+            font-style: italic;
+
+            color: #6b7280;
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+
+            padding-top: 24px;
+
+            border-top:
+                1px solid rgba(255,255,255,.05);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #4b5563;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media(max-width: 768px) {
+
+            #cursorGlow {
+                display: none;
+            }
+
+            .desktop-menu,
+            .contact-nav {
+                display: none;
+            }
+
+            #menuButton {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-small {
+                font-size: 25px;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 48px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-title {
+                font-size: 50px;
+            }
+
+            .footer-title {
+                font-size: 48px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+
+        }
+
+        @media(max-width: 480px) {
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- CURSOR LIGHT -->
+
+    <div id="cursorGlow"></div>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <nav>
+
+            <a href="#home" class="logo">
+                Karan Thakor
+            </a>
+
+            <div class="desktop-menu">
+
+                <a href="#about" class="nav-item">
+                    About
+                </a>
+
+                <a href="#skills" class="nav-item">
+                    Skills
+                </a>
+
+                <a href="#education" class="nav-item">
+                    Education
+                </a>
+
+                <a href="#contact" class="nav-item">
+                    Contact
+                </a>
+
+            </div>
+
+            <a href="#contact" class="contact-nav">
+                Contact
+            </a>
+
+            <button id="menuButton">
+                ☰
+            </button>
+
+        </nav>
+
+
+        <div id="mobileMenu">
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#skills">
+                Skills
+            </a>
+
+            <a href="#education">
+                Education
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section id="home" class="grid-bg">
+
+        <div class="hero-glow"></div>
+
+        <div class="container">
+
+            <div class="hero-content animate-reveal">
+
+                <p class="hero-small">
+                    Hello, I'm Karan
+                </p>
+
+                <h1 class="hero-title neon-text">
+
+                    Frontend Developer
+
+                    <br>
+
+                    &
+
+                    <span>
+                        Web Enthusiast
+                    </span>
+
+                </h1>
+
+                <p class="hero-description">
+
+                    I'm Karan Thakor, a B.Voc IT student
+                    and aspiring Frontend Developer.
+                    I am currently learning web development
+                    and building my foundation in HTML,
+                    CSS and Programming.
+
+                </p>
+
+                <div class="buttons">
+
+                    <a href="#skills"
+                       class="button primary-button">
+
+                        Explore Skills →
+
+                    </a>
+
+                    <a href="#contact"
+                       class="button secondary-button hover-bracket">
+
+                        <span class="bracket">
+                            &lt;
+                        </span>
+
+                        Contact Me
+
+                        <span class="bracket">
+                            /&gt;
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="scroll">
+
+                    <span class="scroll-line"></span>
+
+                    <span class="scroll-text">
+                        SCROLL TO EXPLORE
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+        <div class="container">
+
+            <div class="about-grid">
+
+                <div>
+
+                    <p class="section-label">
+                        ABOUT
+                    </p>
+
+                    <h2 class="section-title">
+
+                        About
+
+                        <span>
+                            me
+                        </span>
+
+                    </h2>
+
+                </div>
+
+
+                <div class="about-text">
+
+                    <p>
+
+                        I'm a motivated and
+                        detail-oriented B.Voc IT student
+                        who is interested in Frontend
+                        Development and web technologies.
+
+                    </p>
+
+                    <p>
+
+                        As a beginner, I am currently
+                        learning and improving my
+                        programming and web development
+                        skills. I am looking forward to
+                        gaining practical knowledge,
+                        learning new technologies and
+                        growing as a developer.
+
+                    </p>
+
+
+                    <!-- LANGUAGES -->
+
+                    <div class="language-title">
+                        Languages
+                    </div>
+
+                    <div class="languages">
+
+                        <div class="language">
+                            Gujarati
+                        </div>
+
+                        <div class="language">
+                            Hindi
+                        </div>
+
+                        <div class="language">
+                            English
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats">
+
+                        <div>
+
+                            <h3>
+                                Fresher
+                            </h3>
+
+                            <p>
+                                Experience
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                B.Voc IT
+                            </h3>
+
+                            <p>
+                                Education
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SKILLS
+    ========================== -->
+
+    <section id="skills">
+
+        <div class="container">
+
+            <p class="section-label">
+                SKILLS
+            </p>
+
+            <h2 class="section-title">
+
+                My
+
+                <span>
+                    skills
+                </span>
+
+            </h2>
+
+
+            <div class="skill-buttons">
+
+                <button
+                    id="technicalBtn"
+                    class="skill-tab active">
+
+                    Technical Skills
+
+                </button>
+
+
+                <button
+                    id="nonTechnicalBtn"
+                    class="skill-tab">
+
+                    Non-Technical Skills
+
+                </button>
+
+            </div>
+
+
+            <!-- TECHNICAL SKILLS -->
+
+            <div
+                id="technicalSkills"
+                class="skills-grid">
+
+
+                <!-- HTML & CSS -->
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            &lt;/&gt;
+                        </div>
+
+                        <h3>
+                            HTML & CSS
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PYTHON -->
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            { }
+                        </div>
+
+                        <h3>
+                            Python
+                        </h3>
+
+                        <p>
+                            Basic knowledge of Python.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MYSQL -->
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            [ ]
+                        </div>
+
+                        <h3>
+                            MySQL
+                        </h3>
+
+                        <p>
+                            Basic SQL and database concepts.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NON-TECHNICAL SKILLS -->
+
+            <div
+                id="nonTechnicalSkills"
+                class="skills-grid"
+                style="display:none;">
+
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            💬
+                        </div>
+
+                        <h3>
+                            Communication
+                        </h3>
+
+                        <p>
+                            Clear and effective
+                            communication.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            🤝
+                        </div>
+
+                        <h3>
+                            Teamwork
+                        </h3>
+
+                        <p>
+                            Comfortable working
+                            with others.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            🧠
+                        </div>
+
+                        <h3>
+                            Problem Solving
+                        </h3>
+
+                        <p>
+                            Basic logical thinking and
+                            problem-solving ability.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="magic-card">
+
+                    <div class="card-content">
+
+                        <div class="skill-icon">
+                            ⏱
+                        </div>
+
+                        <h3>
+                            Time Management
+                        </h3>
+
+                        <p>
+                            Managing tasks and
+                            priorities effectively.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         EDUCATION
+    ========================== -->
+
+    <section id="education">
+
+        <div class="container">
+
+            <p class="section-label">
+                EDUCATION
+            </p>
+
+            <h2 class="section-title">
+
+                My
+
+                <span>
+                    education
+                </span>
+
+            </h2>
+
+
+            <div class="education-list">
+
+
+                <div class="education-card">
+
+                    <div class="current">
+                        Currently Pursuing
+                    </div>
+
+                    <h3>
+                        Bachelor of Vocation
+                        in Information Technology
+                    </h3>
+
+                    <p>
+                        Silver Oak University
+                    </p>
+
+                </div>
+
+
+                <div class="education-card">
+
+                    <h3>
+                        Higher Secondary
+                        Certificate
+                    </h3>
+
+                    <p>
+                        Gujarat Secondary and
+                        Higher Secondary Education
+                        Board
+                    </p>
+
+                </div>
+
+
+                <div class="education-card">
+
+                    <h3>
+                        Secondary School
+                        Certificate
+                    </h3>
+
+                    <p>
+                        Gujarat Secondary and
+                        Higher Secondary Education
+                        Board
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section id="contact">
+
+        <div class="container">
+
+            <div class="contact-grid">
+
+
+                <div>
+
+                    <p class="section-label">
+                        CONTACT
+                    </p>
+
+
+                    <h2 class="contact-title">
+
+                        Contact
+
+                        <span>
+                            Me
+                        </span>
+
+                    </h2>
+
+
+                    <p class="contact-description">
+
+                        I am open to learning and
+                        working on new projects.
+                        Let's build something together
+
+                    </p>
+
+                </div>
+
+
+                <div class="contact-info">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="contact-item">
+
+                        <span>
+                            EMAIL
+                        </span>
+
+                        <a href="mailto:karanthakor13106646@gmail.com">
+
+                            karanthakor13106646@gmail.com
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="contact-item">
+
+                        <span>
+                            PHONE
+                        </span>
+
+                        <a href="tel:+916354996657">
+
+                            +91 63549 96657
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <h2 class="footer-title">
+
+                Thanks for
+
+                <span>
+                    visiting.
+                </span>
+
+            </h2>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Karan Thakor
+                </p>
+
+
+                <p>
+                    Frontend Developer & Web Enthusiast
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* =========================
+           CURSOR LIGHT
+        ========================== */
+
+        const glow =
+            document.getElementById("cursorGlow");
+
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                glow.style.left =
+                    event.clientX + "px";
+
+                glow.style.top =
+                    event.clientY + "px";
+
+            }
+        );
+
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuButton.addEventListener(
+            "click",
+            function() {
+
+                if (
+                    mobileMenu.style.display === "block"
+                ) {
+
+                    mobileMenu.style.display =
+                        "none";
+
+                } else {
+
+                    mobileMenu.style.display =
+                        "block";
+
+                }
+
+            }
+        );
+
+
+        document
+            .querySelectorAll("#mobileMenu a")
+            .forEach(function(link) {
+
+                link.addEventListener(
+                    "click",
+                    function() {
+
+                        mobileMenu.style.display =
+                            "none";
+
+                    }
+                );
+
+            });
+
+
+        /* =========================
+           SKILL TABS
+        ========================== */
+
+        const technicalBtn =
+            document.getElementById(
+                "technicalBtn"
+            );
+
+
+        const nonTechnicalBtn =
+            document.getElementById(
+                "nonTechnicalBtn"
+            );
+
+
+        const technicalSkills =
+            document.getElementById(
+                "technicalSkills"
+            );
+
+
+        const nonTechnicalSkills =
+            document.getElementById(
+                "nonTechnicalSkills"
+            );
+
+
+        technicalBtn.addEventListener(
+            "click",
+            function() {
+
+                technicalSkills.style.display =
+                    "grid";
+
+                nonTechnicalSkills.style.display =
+                    "none";
+
+                technicalBtn.classList.add(
+                    "active"
+                );
+
+                nonTechnicalBtn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        nonTechnicalBtn.addEventListener(
+            "click",
+            function() {
+
+                technicalSkills.style.display =
+                    "none";
+
+                nonTechnicalSkills.style.display =
+                    "grid";
+
+                nonTechnicalBtn.classList.add(
+                    "active"
+                );
+
+                technicalBtn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        /* =========================
+           CARD 3D EFFECT
+        ========================== */
+
+        const cards =
+            document.querySelectorAll(
+                ".magic-card"
+            );
+
+
+        cards.forEach(function(card) {
+
+            card.addEventListener(
+                "mousemove",
+                function(event) {
+
+                    if (
+                        window.innerWidth < 768
+                    ) {
+                        return;
+                    }
+
+
+                    const rect =
+                        card.getBoundingClientRect();
+
+
+                    const x =
+                        event.clientX -
+                        rect.left;
+
+
+                    const y =
+                        event.clientY -
+                        rect.top;
+
+
+                    const centerX =
+                        rect.width / 2;
+
+
+                    const centerY =
+                        rect.height / 2;
+
+
+                    const rotateX =
+                        ((y - centerY) /
+                        centerY) * -2;
+
+
+                    const rotateY =
+                        ((x - centerX) /
+                        centerX) * 2;
+
+
+                    card.style.transform =
+                        `perspective(700px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        translateY(-5px)`;
+
+                }
+            );
+
+
+            card.addEventListener(
+                "mouseleave",
+                function() {
+
+                    card.style.transform = "";
+
+                }
+            );
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
